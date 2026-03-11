@@ -13,11 +13,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Duane Evans — The Camel's Hump Demos",
-  description: "Listen to demos and recordings by Duane Evans",
+  title: "Duane Evans — Music",
+  description:
+    "Listen to The Camel's Hump demos and Hurricane Duane tailgate rock by Duane Evans",
   openGraph: {
-    title: "Duane Evans — The Camel's Hump Demos",
-    description: "Listen to demos and recordings by Duane Evans",
+    title: "Duane Evans — Music",
+    description:
+      "The Camel's Hump demos & Hurricane Duane — Clemson tailgate rock and roll",
     images: ["/album-art.gif"],
   },
 };
