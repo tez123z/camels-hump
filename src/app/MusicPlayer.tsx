@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { tracks, Track } from "./tracks";
+import { lyrics } from "./lyrics";
 
 function formatTime(s: number): string {
   if (!isFinite(s)) return "0:00";
@@ -17,6 +18,7 @@ export default function MusicPlayer() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0.8);
+  const [showLyrics, setShowLyrics] = useState(false);
 
   const currentTrack: Track | null =
     currentIndex !== null ? tracks[currentIndex] : null;
@@ -202,27 +204,69 @@ export default function MusicPlayer() {
             </button>
           </div>
 
-          {/* Volume */}
-          <div className="flex items-center gap-2 mt-3 justify-center">
-            <svg
-              width="16"
-              height="16"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              style={{ color: "var(--muted)" }}
-            >
-              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
-            </svg>
-            <input
-              type="range"
-              min={0}
-              max={1}
-              step={0.01}
-              value={volume}
-              onChange={(e) => setVolume(Number(e.target.value))}
-              className="w-24"
-            />
+          {/* Volume + Lyrics Toggle */}
+          <div className="flex items-center gap-4 mt-3 justify-center">
+            <div className="flex items-center gap-2">
+              <svg
+                width="16"
+                height="16"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                style={{ color: "var(--muted)" }}
+              >
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
+              </svg>
+              <input
+                type="range"
+                min={0}
+                max={1}
+                step={0.01}
+                value={volume}
+                onChange={(e) => setVolume(Number(e.target.value))}
+                className="w-24"
+              />
+            </div>
+            {lyrics[currentTrack.file] && (
+              <button
+                onClick={() => setShowLyrics(!showLyrics)}
+                className="text-xs px-3 py-1 rounded-full transition-colors"
+                style={{
+                  background: showLyrics ? "var(--accent-purple)" : "transparent",
+                  border: "1px solid var(--accent-purple)",
+                  color: showLyrics ? "var(--foreground)" : "var(--accent-purple)",
+                }}
+              >
+                Lyrics
+              </button>
+            )}
           </div>
+        </div>
+      )}
+
+      {/* Lyrics Panel */}
+      {currentTrack && showLyrics && lyrics[currentTrack.file] && (
+        <div
+          className="rounded-xl p-5 mb-6 max-h-80 overflow-y-auto"
+          style={{ background: "var(--card-bg)" }}
+        >
+          <p
+            className="text-xs uppercase tracking-widest mb-3"
+            style={{ color: "var(--accent-purple)" }}
+          >
+            Lyrics
+          </p>
+          <div
+            className="text-sm leading-7 whitespace-pre-line"
+            style={{ color: "var(--foreground)", opacity: 0.85 }}
+          >
+            {lyrics[currentTrack.file]}
+          </div>
+          <p
+            className="text-xs mt-4 italic"
+            style={{ color: "var(--muted)" }}
+          >
+            Transcribed via AI — may contain inaccuracies
+          </p>
         </div>
       )}
 
