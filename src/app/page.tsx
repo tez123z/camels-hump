@@ -53,7 +53,7 @@ export default function Home() {
 
       <footer className="text-center mt-12 pb-8">
         <p className="text-xs" style={{ color: "var(--muted)" }}>
-          In loving memory of Duane Evans
+&ldquo;Where there&apos;s love there is hope, where there&apos;s hope there is time&rdquo; &mdash; Duane Evans
         </p>
       </footer>
     </div>
